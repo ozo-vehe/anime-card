@@ -1,0 +1,167 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/* Background Image */
+.bg_image {
+  background-image: url('./assets/bg_image.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.bg_text {
+  background: #413e3e56;
+  backdrop-filter: blur(7px);
+  width: 100%;
+  animation: animate 0.8s 1s linear forwards;
+}
+.bg_text * {
+  opacity: 0;
+  animation: show_text 0.3s 2.6s linear forwards;
+}
+
+@keyframes animate {
+  0% { width: 100%; }
+  100% { width: 40%; }
+}
+@keyframes show_text {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+/* Navigation Section */
+nav {
+  position: fixed;
+  width: 100vw;
+  padding: 0px 5%;
+  margin: 0px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-bottom: thin solid #2f2e302d;
+  height: 70px;
+  z-index: 1;
+}
+
+.nav_content {
+  display: flex;
+}
+/* Ends */
+
+
+/* NFT Marketplace */
+.nft_marketplace {
+  padding-top: 100px;
+}
+/* Ends Here */
+
+/* Profile */
+.profile_header {
+  width: 160px;
+  flex-direction: column;
+}
+.profile_details > h3 {
+  text-align: center;
+  margin: 0px auto;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  position: relative;
+  display: inline-block;
+}
+.profile_details > h3::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0px;
+  width: 100%;
+  height: 2px;
+  background-color: #1cbb93;
+}
+/* Profile End */
+
+/* Price Tag */
+.price_tag {
+  position: absolute !important;
+  color: #fff;
+  top: 10px !important;
+  background-color: #000;
+  border-bottom-right-radius: 50px;
+  border-top-right-radius: 50px;
+  left: 0px;
+  width: 85px !important;
+  height: auto !important;
+  padding: 10px;
+}
+.price_tag p {
+  padding: 0px;
+  margin: 0px;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+/* Ends Here */
+
+/* Card Body */
+.card_body {
+  position: absolute;
+  bottom: -90px;
+  left: 0px;
+  width: 100%;
+  opacity: 0;
+  z-index: 1;
+  background-color: #fff;
+  transition: all 0.5s;
+}
+.card_image:hover + .card_body {
+  opacity: 1;
+  bottom: 0px;
+}
+
+@keyframes slide_up {
+  0% {
+    z-index: -1;
+    opacity: 1;
+    bottom: -90px;
+  }
+  10% {
+    z-index: 1;
+    opacity: 1;
+    bottom: -90px;
+  }
+  100% {
+    opacity: 1;
+    z-index: 1;
+    bottom: 0px;
+  }
+}
+/* Ends Here */
