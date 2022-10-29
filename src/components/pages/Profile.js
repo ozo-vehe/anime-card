@@ -52,18 +52,15 @@ export default function Profile ({ show_btn }) {
   // uses the data gotten from the Card.js component
   const updateAnimeCard = async(info) => {
     const {popup_data, data_name, index} = info;
-    console.log(info)
 
     if(data_name.includes("Gift")) {
-      console.log(info)
       try {
         await giftCardNft(minterContract, performActions, index, popup_data);
         getAnimeCards();
       } catch(error) { console.log(error) }
     }
     
-    else if(data_name.inlcudes("Resell")) {
-      console.log(info)
+    else if(data_name.includes("Resell")) {
       try {
         const price = ethers.utils.parseUnits(String(popup_data), "ether");
         await resellCardNft(minterContract, performActions, index, price)

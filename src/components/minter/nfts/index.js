@@ -72,10 +72,8 @@ const NftList = ({ minterContract, name }) => {
   // uses the data gotten from the Card.js component
   const updateAnimeCard = async(info) => {
     const {popup_data, data_name, index} = info;
-    console.log(info)
 
     if(data_name.includes("Gift")) {
-      console.log(info)
       try {
         await giftCardNft(minterContract, performActions, index, popup_data);
         getAnimeCards();
@@ -83,7 +81,6 @@ const NftList = ({ minterContract, name }) => {
     }
     
     else if(data_name.includes("Resell")) {
-      console.log(info)
       try {
         const price = ethers.utils.parseUnits(String(popup_data), "ether");
         await resellCardNft(minterContract, performActions, index, price)

@@ -1,6 +1,6 @@
 {
-  "homepage": "https://ozo-vehe.github.io/anime_cards",
-  "name": "anime cards",
+  "homepage": "https://ozo-vehe.github.io/anime-cards",
+  "name": "anime-cards",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
