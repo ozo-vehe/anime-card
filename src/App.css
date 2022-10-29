@@ -19,9 +19,6 @@
 
 /* Background Image */
 .bg_image {
-  background-image: url('./assets/bg_image.jpg');
-  background-position: center;
-  background-size: cover;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -29,8 +26,12 @@
   text-align: center;
 }
 
+video {
+  height: 100vh;
+}
+
 .bg_text {
-  background: #413e3e56;
+  background: #413e3e73;
   backdrop-filter: blur(7px);
   width: 100%;
   animation: animate 0.8s 1s linear forwards;

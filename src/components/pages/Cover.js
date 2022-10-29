@@ -1,11 +1,14 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import PropTypes from "prop-types";
+import Video from "../Video"
+import src from "../../assets/production ID-4711694.mp4"
 
 const Cover = ({ name, connect }) => {
   if (name) {
     return (
       <div className="bg_image">
+        <Video src={src} />
         <div
           className="bg_text text-light position-absolute start-0 top-0 h-100 d-flex justify-content-center align-items-center"
         >
