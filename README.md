@@ -1,8 +1,11 @@
-# Classic Cars
-This is an NFT marketplace for classic cars ranging from mustangs to bmws and the likes. It provides a platform for the minting of classic cars as NFts and selling, buying and gifting these minted NFTs at the descretion of the owner.
-It's a project I'm really proud of and would like your feedbacks and contributions
+# Anime Cards NFT Markeplace
+<img src="https://th.bing.com/th/id/R.33c30ac91d8e7e9b1f5cbd235501bb71?rik=I8NVkX8I%2f7kcAw&pid=ImgRaw&r=0" width="600px" />
+A marketplace for anime lovers to mint their animes into NFT and sell them. Users having connected their wallet to the platform can
+1. Mint their uploaded anime image into an NFT
+2. Buy, sell, resell, gift out and remove a particular NFT
+3. Visit their profile to see all their owned NFT
 
-DEMO: [Classic Cars](https://dcharles3000.github.io/classic_cars/)
+DEMO: [Anime Cards](https://ozo-vehe.github.io/anime-cards/)
 
 ## 1. Tech Stack
 This boilerplate uses the following tech stack:
@@ -25,7 +28,7 @@ git clone https://github.com/dacadeorg/celo-react-boilerplate.git
 ### 2.2 Navigate to the directory:
 
 ```bash
-cd classic_cars
+cd anime-cards
 ```
 
 ### 2.3 Install the dependencies:
@@ -54,7 +57,7 @@ You can use your own smart contract that the dapp will interact with by followin
 - Create a key called MNEMONIC and paste in your mnemonic key. e.g
 
 ```js
-MNEMONIC = "...";
+MNEMONIC = "***** ***** ***** ***** *****";
 ```
 
 In this case, we are using a mnemonic from an account created on Metamask. You can copy it from your Metamask account settings. An account created on the Celo extension wallet will not work.
@@ -80,9 +83,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
-2. Create your new feature branch (`git checkout -b feature/newfeature`)
-3. Commit your changes (`git commit -m 'added a/some new feature(s)'`)
-4. Push to the branch (`git push origin feature/newfeature`)
+2. Create your new feature branch (`git checkout -b feature/new_feature`)
+3. Commit your changes (`git commit -m 'icluded a new feature(s)'`)
+4. Push to the branch (`git push origin feature/new_feature`)
 5. Open a pull request
 
 
