@@ -7,23 +7,23 @@ import PopUp from "../../ui/PopUp";
 import { useContractKit } from "@celo-tools/use-contractkit";
 
 const NftCard = ({ nft, change_data, buy, remove_card }) => {
-  const { image, anime_name, owner, char_name, index, price, sold, market } = nft;
+  const { char_name, anime_name, image, owner, index, price, sold, available } = nft;
   const { kit } = useContractKit();
   const { defaultAccount } = kit;
 
   // Card button function to display a particular button depending on the
   // the owner of the Nft and the contract being displayed
-  function card_button(owner, contract_address, sold, market, index) {
+  function card_button(owner, contract_address, sold, available, index) {
     if(owner === contract_address) {
-      if(market) { return <> <PopUp data={(info) => {change_data({...info, index})}} data_name={"Gift Anime"} /> <Button onClick={()=>{remove_card({index})}} variant="outline-dark">Remove</Button> </> }
-      else if (!market) {
+      if(available) { return <> <PopUp data={(info) => {change_data({...info, index})}} data_name={"Gift Anime"} /> <Button onClick={()=>{remove_card({index})}} variant="outline-dark">Remove</Button> </> }
+      else if (!available) {
         return <div className="d-flex justify-content-center gap-3"><PopUp data={nft_data} data_name={"Gift Anime"} /><PopUp data={nft_data} data_name="Resell Anime" /></div>
       }
     }
     else if (owner !== contract_address) {
       if(sold) { return <Button disabled variant="danger" style={{ minWidth: "70px"}}>Sold</Button> }
-      else if(!market) { return <Button disabled variant="danger" style={{ minWidth: "70px"}}>Removed</Button> }
-      else if(!sold && market) { return <Button variant="dark" style={{ minWidth: "70px"}} onClick={()=> {buy({index})}}>Buy</Button> }
+      else if(!available) { return <Button disabled variant="danger" style={{ minWidth: "70px"}}>Removed</Button> }
+      else if(!sold && available) { return <Button variant="dark" style={{ minWidth: "70px"}} onClick={()=> {buy({index})}}>Buy</Button> }
     }
   }
   
@@ -64,7 +64,7 @@ const NftCard = ({ nft, change_data, buy, remove_card }) => {
           <Card.Text className="flex-grow-1 text-capitalize">{anime_name}</Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-center gap-3">
-          { card_button(owner, defaultAccount, sold, market, index) }
+          { card_button(owner, defaultAccount, sold, available, index) }
         </Card.Footer>
       </Card>
     </Col>

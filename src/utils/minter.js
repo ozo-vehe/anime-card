@@ -19,14 +19,16 @@ const makeFileObjects = (file, file_name) => {
   return files
 }
 
+// Function to trim the name of an anime card
+// returning a new formatted name without whitespaces
+// and replacing the whitespace between the name with %20
 const trimName = (name) => {
-  let file_name;
-  const t_name = name.trim() // removes extra whitespaces
+  let t_name = name.trim();
   if(t_name.includes(" ")) {
-    file_name = t_name.replaceAll(" ", "%20")
-    return file_name
+    t_name = t_name.replaceAll(" ", "%20");
   }
-  return t_name
+  console.log(t_name);
+  return t_name;
 }
 
 export const createCardNft = async (
@@ -96,7 +98,7 @@ export const getStoredNfts = async (minterContract) => {
           anime_name: nft_data.anime_name,
           price: anime_card[4],
           sold: anime_card[5],
-          market: anime_card[6]
+          available: anime_card[6]
         });
       });
       nft_arr.push(nft);
