@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/anime-cards/static/css/main.468e51d0.chunk.css",
-    "main.js": "/anime-cards/static/js/main.297175c3.chunk.js",
-    "main.js.map": "/anime-cards/static/js/main.297175c3.chunk.js.map",
+    "main.js": "/anime-cards/static/js/main.8ce1be1e.chunk.js",
+    "main.js.map": "/anime-cards/static/js/main.8ce1be1e.chunk.js.map",
     "runtime-main.js": "/anime-cards/static/js/runtime-main.75bfac8d.js",
     "runtime-main.js.map": "/anime-cards/static/js/runtime-main.75bfac8d.js.map",
     "static/css/2.c0a7d869.chunk.css": "/anime-cards/static/css/2.c0a7d869.chunk.css",
@@ -22,6 +22,6 @@
     "static/css/2.c0a7d869.chunk.css",
     "static/js/2.9d889416.chunk.js",
     "static/css/main.468e51d0.chunk.css",
-    "static/js/main.297175c3.chunk.js"
+    "static/js/main.8ce1be1e.chunk.js"
   ]
 }
