@@ -17,7 +17,7 @@ const NftCard = ({ nft, change_data, buy, remove_card }) => {
     if(owner === contract_address) {
       if(available) { return <> <PopUp data={(info) => {change_data({...info, index})}} data_name={"Gift Anime"} /> <Button onClick={()=>{remove_card({index})}} variant="outline-dark">Remove</Button> </> }
       else if (!available) {
-        return <div className="d-flex justify-content-center gap-3"><PopUp data={nft_data} data_name={"Gift Anime"} /><PopUp data={nft_data} data_name="Resell Anime" /></div>
+        return <div className="d-flex justify-content-center gap-3"><PopUp data={(info) => {change_data({...info, index})}} data_name={"Gift Anime"} /><PopUp data={(info) => {change_data({...info, index})}} data_name="Resell Anime" /></div>
       }
     }
     else if (owner !== contract_address) {
@@ -25,15 +25,6 @@ const NftCard = ({ nft, change_data, buy, remove_card }) => {
       else if(!available) { return <Button disabled variant="danger" style={{ minWidth: "70px"}}>Removed</Button> }
       else if(!sold && available) { return <Button variant="dark" style={{ minWidth: "70px"}} onClick={()=> {buy({index})}}>Buy</Button> }
     }
-  }
-  
-  // nft_data gotten from the pop up component
-  // data will be passed to the index.js component for use
-  async function nft_data(formData) {
-    change_data({
-      ...formData,
-      index
-    })
   }
   
   return (
