@@ -1,9 +1,8 @@
-# Anime Cards NFT Markeplace
-<img src="https://th.bing.com/th/id/R.33c30ac91d8e7e9b1f5cbd235501bb71?rik=I8NVkX8I%2f7kcAw&pid=ImgRaw&r=0" width="600px" />
-A marketplace for anime lovers to mint their animes into NFT and sell them. Users having connected their wallet to the platform can
-1. Mint their uploaded anime image into an NFT
-2. Buy, sell, resell, gift out and remove a particular NFT
-3. Visit their profile to see all their owned NFT
+# Anime Cards NFT Markeplace <img src="https://th.bing.com/th/id/R.33c30ac91d8e7e9b1f5cbd235501bb71?rik=I8NVkX8I%2f7kcAw&pid=ImgRaw&r=0" width="600px" />
+A marketplace for anime lovers to mint their animes into NFT and sell them. Users having connected their wallet to the platform can:
+- Mint their uploaded anime image into an NFT
+- Buy, sell, resell, gift out and remove a particular NFT
+- Visit their profile to see all their owned NFT
 
 DEMO: [Anime Cards](https://ozo-vehe.github.io/anime-cards/)
 
