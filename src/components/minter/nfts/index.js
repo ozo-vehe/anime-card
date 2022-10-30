@@ -121,19 +121,23 @@ const NftList = ({ minterContract, name }) => {
                 <AddNfts save={ addAnimeCard } address={ address } />
               ) : null}
             </div>
-            <Row xs={1} sm={2} lg={3} className="g-3 mb-5 g-xl-4 g-xxl-5">
-              {nfts.map((_nft) => (
-                <Nft
-                  key={_nft.index}
-                  nft={{
-                    ..._nft,
-                  }}
-                  change_data={ updateAnimeCard }
-                  buy={ buyAnimeCard }
-                  remove_card={ removeAnimeCard }
-                />
-              ))}
-            </Row>
+            {nfts.length > 0 ? (
+              <Row xs={1} sm={2} lg={3} className="g-3 mb-5 g-xl-4 g-xxl-5">
+                {nfts.map((_nft) => (
+                  <Nft
+                    key={_nft.index}
+                    nft={{
+                      ..._nft,
+                    }}
+                    change_data={ updateAnimeCard }
+                    buy={ buyAnimeCard }
+                    remove_card={ removeAnimeCard }
+                  />
+                  ))}
+                </Row>
+              ) : (
+                <p className="text-center my-5 fs-2">No uploaded anime card available</p>
+              )}
           </>
         ) : (
           <Loader />

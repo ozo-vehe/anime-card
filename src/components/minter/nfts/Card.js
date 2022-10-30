@@ -60,7 +60,7 @@ const NftCard = ({ nft, change_data, buy, remove_card }) => {
         </div>
 
         <Card.Body className="card_body d-flex flex-column text-center">
-          <Card.Title className="fs-3 d-flex justify-content-evenly align-items-center">{char_name}</Card.Title>
+          <Card.Title className="fs-3 d-flex justify-content-evenly align-items-center text-capitalize">{char_name}</Card.Title>
           <Card.Text className="flex-grow-1 text-capitalize">{anime_name}</Card.Text>
         </Card.Body>
         <Card.Footer className="d-flex justify-content-center gap-3">
