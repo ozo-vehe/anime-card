@@ -15,13 +15,13 @@ contract AnimeCard is ERC721, ERC721Enumerable, ERC721URIStorage, IERC721Receive
     constructor() ERC721("AnimeCard", "ANFT") {}
 
     using Counters for Counters.Counter;
-    Counters.Counter private anime_counter;
+    Counters.Counter private animeCounter;
 
     struct Card {
         address payable owner;
-        string char_name;
+        string charName;
         string image;
-        uint256 token_id;
+        uint256 tokenId;
         uint256 price;
         bool sold;
         bool available;
@@ -30,12 +30,17 @@ contract AnimeCard is ERC721, ERC721Enumerable, ERC721URIStorage, IERC721Receive
     mapping(uint256 => Card) internal cards;
 
 /// Modifiers used in this smart contract
-    modifier onlyOwner(uint256 _token_id){
-        require(msg.sender == cards[_token_id].owner, "Only the owner has access to this");
+    modifier onlyOwner(uint256 _tokenid){
+        require(msg.sender == cards[_tokenid].owner, "Not owner");
         _;
     }
-    modifier cardExists(uint256 _token_id){
-        require(_token_id == cards[_token_id].token_id, "Sorry, anime card does not exist");    // Card must exist
+    modifier cardExists(uint256 _tokenid){
+        require(_tokenid >= animeCounter.current(), "card does not exist");    // Card must exist
+        _;
+    }
+
+    modifier isAvailable(uint256 _tokenid){
+        require(cards[_tokenid].available, "card not available");
         _;
     }
 
@@ -43,15 +48,15 @@ contract AnimeCard is ERC721, ERC721Enumerable, ERC721URIStorage, IERC721Receive
 /// @dev mints an anime card image as an NFT
 /// @param uri, the url of the anime card image to be minted
 /// @param to, the address which the NFT is to be minted to
-    function safeMint(address to, string memory uri) cardExists(anime_counter.current()) public {
-        _safeMint(to, anime_counter.current());
-        _setTokenURI(anime_counter.current(), uri);
+    function safeMint(address to, string memory uri) cardExists(animeCounter.current()) public {
+        _safeMint(to, animeCounter.current());
+        _setTokenURI(animeCounter.current(), uri);
 
-        anime_counter.increment();
+        animeCounter.increment();
     }
 
 
-/// @notice requests for car details like char_name, image and price. 
+/// @notice requests for car details like charName, image and price. 
     /// Stores these details on the blockcahin
 /// @dev takes three parameters as arguments, saves them in the cards mapping with their length as a key
 /// @param _char_name, the character name of the anime card uploaded
@@ -62,29 +67,27 @@ contract AnimeCard is ERC721, ERC721Enumerable, ERC721URIStorage, IERC721Receive
         string memory _image,
         uint256 _price
     ) external {
-        bool _sold = false;
-        bool _available = true;
         uint256 _length = totalSupply();
-        uint256 _token_id = anime_counter.current();
+        uint256 _tokenid = animeCounter.current();
 
         cards[_length] = Card (
             payable(msg.sender),
             _char_name,
             _image,
-            _token_id,
+            _tokenid,
             _price,
-            _sold,
-            _available
+            false,
+            false
         );
         
     }
 
 
 /// @notice a function to read the values of a stored anime card
-/// @dev uses the token_id of an anime card which corresponds to the index in the cards mapping
-/// @param _token_id, token_id of the anime card whose values is to read
+/// @dev uses the tokenId of an anime card which corresponds to the index in the cards mapping
+/// @param _tokenid, tokenId of the anime card whose values is to read
 /// @return anime card, with it's stored values
-    function readAnimeCard(uint256 _token_id) external view returns (
+    function readAnimeCard(uint256 _tokenid) external view returns (
         address payable,
         string memory,
         string memory,
@@ -94,122 +97,115 @@ contract AnimeCard is ERC721, ERC721Enumerable, ERC721URIStorage, IERC721Receive
         bool
     ) {
         return (
-            cards[_token_id].owner,
-            cards[_token_id].char_name,
-            cards[_token_id].image,
-            cards[_token_id].token_id,
-            cards[_token_id].price,
-            cards[_token_id].sold,
-            cards[_token_id].available
+            cards[_tokenid].owner,
+            cards[_tokenid].charName,
+            cards[_tokenid].image,
+            cards[_tokenid].tokenId,
+            cards[_tokenid].price,
+            cards[_tokenid].sold,
+            cards[_tokenid].available
         );
     }
 
 
-/// @notice a function to purchase an anime card using its token_id
-/// @dev uses the token_id which corresponds to the stored anime card's index
+/// @notice a function to purchase an anime card using its tokenId
+/// @dev uses the tokenId which corresponds to the stored anime card's index
 /// transfers the anime card to the buyer and the money to the seller
 ///     the following conditions must however be met before this transaction can successfully take place;
 ///     it requires that the buyer is different from the seller
 ///     it requires that the card to be bought has not been sold already
 ///     it requires that the buyer submits a valid price for the anime card to be purchased
 ///     it requires that the anime card must be available in the market and it's for sale
-/// @param _token_id, of the desired anime card
-    function buyAnimeCard(uint256 _token_id) external payable {
-        // sold value of the requested anime card
-        bool _sold = cards[_token_id].sold;
-        // available value of the requested anime card
-        bool _available = cards[_token_id].available;
-        // price value of the requested anime card
-        uint256 _price = cards[_token_id].price;
+/// @param _tokenid, of the desired anime card
+    function buyAnimeCard(uint256 _tokenid) external payable isAvailable(_tokenid){
 
-        require(_available, "Sorry, anime card currently not available");
-        require(!_sold, "Sorry, anime card is sold out");
-        require(msg.sender != cards[_token_id].owner, "Sorry you can't buy your uploaded anime card");
-        require(msg.value >= _price, "Please submit a valid price for the desired anime card");
+        require(!cards[_tokenid].sold, "Sorry, anime card is sold out");
+        require(msg.sender != cards[_tokenid].owner, "Owner can't buy");
+        require(msg.value >= cards[_tokenid].price, "Please submit a valid price for the desired anime card");
 
-        address _owner = ownerOf(_token_id);
+        address _owner = ownerOf(_tokenid);
 
         // transfer the anime card to the buyer
-        _transfer(_owner, msg.sender, _token_id);
+        _transfer(_owner, msg.sender, _tokenid);
 
         // transfer the money to the seller
-        cards[_token_id].owner.transfer(msg.value);
+        cards[_tokenid].owner.transfer(msg.value);
 
         // change the owner, sold and availalbe variable of the newly purchased anime card
-        cards[_token_id].owner = payable(msg.sender);
-        cards[_token_id].sold = true;
-        cards[_token_id].available = false;
+        cards[_tokenid].owner = payable(msg.sender);
+        cards[_tokenid].sold = true;
+        cards[_tokenid].available = false;
     }
 
 /// @notice a function to remove an anime card from the market
-/// @dev takes in the param _token_id which corresponds to the anime card index in the cards mapping
+/// @dev takes in the param _tokenid which corresponds to the anime card index in the cards mapping
 /// uses the modifiers cardExists and onlyOwner
 /// changes the available property to false, making the anime card unavailable for sale
-/// @param _token_id, id of the car to be gifted
-    function removeFromMarket(uint256 _token_id) external cardExists(_token_id) onlyOwner(_token_id){
-        require(cards[_token_id].available, "Anime card is not in available the market");
-        cards[_token_id].available = false;
+/// @param _tokenid, id of the car to be gifted
+    function removeFromMarket(uint256 _tokenid) external onlyOwner(_tokenid) isAvailable(_tokenid){
+        require(cards[_tokenid].available, "Anime card is not in available the market");
+        cards[_tokenid].available = false;
     }
 
 
 /// @notice a function to send an anime card as a gift to another user
-/// @dev uses the _token_id which corresponds to the anime card's index to find the anime card
+/// @dev uses the _tokenid which corresponds to the anime card's index to find the anime card
 /// and the _receivers address to which the anime card will be sent to
 /// checks to make sure the _receivers address is a valid address
 /// calls the safeTransferFrom function to transfer the card from the owner to the receiver
 /// uses the modifier cardExists and onlyOwner
-/// @param _token_id, id of the car to be gifted
+/// @param _tokenid, id of the car to be gifted
 /// @param _receiver, the address of the receiver of the car gift
-    function giftAnimeCard(uint256 _token_id, address _receiver) external cardExists(_token_id) onlyOwner(_token_id){
+    function giftAnimeCard(uint256 _tokenid, address _receiver) external onlyOwner(_tokenid){
         require(msg.sender != _receiver, "Can't gift Yourrself");
 
         if(_receiver != address(0)) {
-            cards[_token_id].owner = payable(_receiver);
-            safeTransferFrom(msg.sender, _receiver, _token_id);
+            cards[_tokenid].owner = payable(_receiver);
+            safeTransferFrom(msg.sender, _receiver, _tokenid);
 
-            cards[_token_id].sold = true;
-            cards[_token_id].available = false;
+            cards[_tokenid].sold = true;
+            cards[_tokenid].available = false;
         }
     }
 
 
 /// @notice a function to resell an anime card at a particular price
-/// @dev takes in the param _token_id which corresponds to the anime card's index to find the anime card in thre cards mapping
+/// @dev takes in the param _tokenid which corresponds to the anime card's index to find the anime card in thre cards mapping
 /// requires that the anime card should not be in the market
 /// uses the modifiers cardExists anf onlyOwner
 /// assigns the appropriate values to the price, sold and available properties of the anime card
-/// @param _token_id, token_id of the anime card to be gifted which corresponds the index in the cards mapping
+/// @param _tokenid, tokenId of the anime card to be gifted which corresponds the index in the cards mapping
 /// @param _price, mew price of the anime card
-    function resellAnimeCard(uint256 _token_id, uint256 _price) external cardExists(_token_id) onlyOwner(_token_id){
-        require(!cards[_token_id].available, "Card already in the marketplace");
+    function resellAnimeCard(uint256 _tokenid, uint256 _price) external onlyOwner(_tokenid){
+        require(!cards[_tokenid].available, "Card already in the marketplace");
 
-        cards[_token_id].price = _price;
-        cards[_token_id].sold = false;
-        cards[_token_id].available = true;
+        cards[_tokenid].price = _price;
+        cards[_tokenid].sold = false;
+        cards[_tokenid].available = true;
     }
 
     function _beforeTokenTransfer(
         address from,
         address to,
-        uint256 token_id
+        uint256 tokenId
     ) internal override(ERC721, ERC721Enumerable) {
-        super._beforeTokenTransfer(from, to, token_id);
+        super._beforeTokenTransfer(from, to, tokenId);
     }
 
-    function _burn(uint256 token_id)
+    function _burn(uint256 tokenId)
         internal
         override(ERC721, ERC721URIStorage)
     {
-        super._burn(token_id);
+        super._burn(tokenId);
     }
 
-    function tokenURI(uint256 token_id)
+    function tokenURI(uint256 tokenId)
         public
         view
         override(ERC721, ERC721URIStorage)
         returns (string memory)
     {
-        return super.tokenURI(token_id);
+        return super.tokenURI(tokenId);
     }
     function supportsInterface(bytes4 interfaceId)
         public
